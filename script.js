@@ -119,11 +119,20 @@ const displayWordDetails = (word) => {
                         <h2 class="font-medium">Example</h2>
                         <p>${word.sentence}</p>
                         <p class="bangla ">সমার্থক শব্দ গুলো</p>
-                        <span class="bg-sky-200 px-2 py-1 rounded">Synonym 1</span>
-                        <span class="bg-sky-200 px-2 py-1 rounded">Synonym 2</span>
-                        <span class="bg-sky-200 px-2 py-1 rounded">Synonym 3</span>
+                 
+                        <div>
+                        ${synonym(word.synonyms)}
+                       </div>
+
+    
                     </div>
     `
     document.getElementById('modal').showModal()
 
+}
+
+
+const synonym = (word) => {
+    let htmlElement = word.map(element => `<span class="bg-sky-200 px-2 py-1 rounded">${element}</span>`)
+    return(htmlElement.join("  "))
 }
