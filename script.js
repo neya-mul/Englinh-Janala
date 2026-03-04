@@ -134,32 +134,34 @@ const displayWordDetails = (word) => {
 
 const synonym = (word) => {
     let htmlElement = word.map(element => `<span class="bg-sky-200 px-2 py-1 rounded">${element}</span>`)
-    return(htmlElement.join("  "))
+    return (htmlElement.join("  "))
 }
 
 
-document.getElementById('search-btn').addEventListener('click',()=>{
+document.getElementById('search-btn').addEventListener('click', () => {
     let input = document.getElementById('search-input')
     let inputValue = input.value.toLowerCase();
     fetch('https://openapi.programming-hero.com/api/words/all')
-    .then(res=> res.json())
-    .then(data=> {
-        let wordData = data.data;
-        // console.log(wordData)
-        let filterWord = wordData.filter(word=>word.word.includes(inputValue))  
-        // console.log(filterWord)
-        displayWords(filterWord);
+        .then(res => res.json())
+        .then(data => {
+            let wordData = data.data;
+            // console.log(wordData)
+            let filterWord = wordData.filter(word => word.word.toLowerCase().includes(inputValue))
+            let filterWordStarts = wordData.filter(word => word.word.toLowerCase().startsWith(inputValue))
+            // console.log(filterWord)
+            displayWords(filterWord)
+            displayWords(filterWordStarts);
 
-    })
-  
-    
-    
+        })
+
+
+
 })
 
 
 
 function pronounceWord(word) {
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = "en-EN"; // English
-  window.speechSynthesis.speak(utterance);
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = "en-EN"; // English
+    window.speechSynthesis.speak(utterance);
 }
