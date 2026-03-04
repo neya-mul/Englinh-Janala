@@ -83,10 +83,10 @@ const displayWords = (word) => {
             <div class="card bg-white  py-13 space-y-2.5 px-10 mx-auto text-center ">
                 <h3 class="font-bold">${element.word ? element.word : "word not found"}</h3>
                 <p>Meaning /Pronounciation</p>
-                <h1 class="text-2xl font-bold">"${element.meaning ? element.meaning : "Meaning not foune"} / ${element.pronunciation ? element.pronunciation : "pronunciation not found"}"</h1>
+                <h1 class="text-2xl font-bold">"${element.meaning ? element.meaning : "Meaning not found"} / ${element.pronunciation ? element.pronunciation : "pronunciation not found"}"</h1>
                   <div class="flex justify-between ">
                     <button onclick="loadWordDetails(${element.id})" class="hover:bg-blue-100 p-1 rounded-2xl"><i class="fa-solid fa-circle-info"></i></button>
-                    <button class="hover:bg-blue-100 p-1 rounded-2xl"><i class="fa-solid fa-volume-high"></i></button>
+                    <button class="hover:bg-blue-100 p-1 rounded-2xl"><i class="fa-solid fa-volume-high" onclick = "pronounceWord('${element.word}')"></i></button>
                 </div>
             </div>
     
@@ -112,13 +112,13 @@ const displayWordDetails = (word) => {
     console.log(word)
     let details = document.getElementById('details');
     details.innerHTML = `
-       <div class="p-2 rounded  max-w-[450px] mx-auto">
+       <div class="p-1 rounded  max-w-[450px] mx-auto">
                         <h1 class="text-3xl font-bold">${word.word} (<i class="fa-solid fa-microphone"></i>:${word.meaning})</h1>
                         <h1 class="font-bold">Meaning</h1>
                         <p class="mb-6 text-2xl bangla">${word.meaning}</p>
                         <h2 class="font-medium">Example</h2>
                         <p>${word.sentence}</p>
-                        <p class="bangla ">সমার্থক শব্দ গুলো</p>
+                        <p class="bangla ">সমার্থক শব্দ গুলো:</p>
                  
                         <div>
                         ${synonym(word.synonyms)}
@@ -148,9 +148,18 @@ document.getElementById('search-btn').addEventListener('click',()=>{
         // console.log(wordData)
         let filterWord = wordData.filter(word=>word.word.includes(inputValue))  
         // console.log(filterWord)
-        displayWords(filterWord)
+        displayWords(filterWord);
+
     })
   
     
     
 })
+
+
+
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
