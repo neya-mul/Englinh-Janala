@@ -113,7 +113,7 @@ const displayWordDetails = (word) => {
     let details = document.getElementById('details');
     details.innerHTML = `
        <div class="p-2 rounded  max-w-[450px] mx-auto">
-                        <h1 class="text-3xl font-bold">${word.word} (<i class="fa-solid fa-microphone"></i>:ইগার)</h1>
+                        <h1 class="text-3xl font-bold">${word.word} (<i class="fa-solid fa-microphone"></i>:${word.meaning})</h1>
                         <h1 class="font-bold">Meaning</h1>
                         <p class="mb-6 text-2xl bangla">${word.meaning}</p>
                         <h2 class="font-medium">Example</h2>
@@ -136,3 +136,21 @@ const synonym = (word) => {
     let htmlElement = word.map(element => `<span class="bg-sky-200 px-2 py-1 rounded">${element}</span>`)
     return(htmlElement.join("  "))
 }
+
+
+document.getElementById('search-btn').addEventListener('click',()=>{
+    let input = document.getElementById('search-input')
+    let inputValue = input.value.toLowerCase();
+    fetch('https://openapi.programming-hero.com/api/words/all')
+    .then(res=> res.json())
+    .then(data=> {
+        let wordData = data.data;
+        // console.log(wordData)
+        let filterWord = wordData.filter(word=>word.word.includes(inputValue))  
+        // console.log(filterWord)
+        displayWords(filterWord)
+    })
+  
+    
+    
+})
