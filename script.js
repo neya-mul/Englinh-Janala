@@ -99,15 +99,31 @@ const displayWords = (word) => {
 }
 
 
-const loadWordDetails = (id) =>{
- let url = `https://openapi.programming-hero.com/api/word/${id}`
- fetch(url)
- .then(res => res.json())
- .then(data=> displayWordDetails(data.data))
+const loadWordDetails = (id) => {
+    let url = `https://openapi.programming-hero.com/api/word/${id}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayWordDetails(data.data))
 
 
 }
 
-const displayWordDetails = (word) =>{
-  console.log(word)
+const displayWordDetails = (word) => {
+    console.log(word)
+    let details = document.getElementById('details');
+    details.innerHTML = `
+       <div class="p-2 rounded  max-w-[450px] mx-auto">
+                        <h1 class="text-3xl font-bold">${word.word} (<i class="fa-solid fa-microphone"></i>:ইগার)</h1>
+                        <h1 class="font-bold">Meaning</h1>
+                        <p class="mb-6 text-2xl bangla">${word.meaning}</p>
+                        <h2 class="font-medium">Example</h2>
+                        <p>${word.sentence}</p>
+                        <p class="bangla ">সমার্থক শব্দ গুলো</p>
+                        <span class="bg-sky-200 px-2 py-1 rounded">Synonym 1</span>
+                        <span class="bg-sky-200 px-2 py-1 rounded">Synonym 2</span>
+                        <span class="bg-sky-200 px-2 py-1 rounded">Synonym 3</span>
+                    </div>
+    `
+    document.getElementById('modal').showModal()
+
 }
